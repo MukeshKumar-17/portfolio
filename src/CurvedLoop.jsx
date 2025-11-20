@@ -1,16 +1,7 @@
-import { useRef, useEffect, useState, useMemo, useId, FC, PointerEvent } from 'react';
+import { useRef, useEffect, useState, useMemo, useId } from 'react';
 import './CurvedLoop.css';
 
-interface CurvedLoopProps {
-    marqueeText?: string;
-    speed?: number;
-    className?: string;
-    curveAmount?: number;
-    direction?: 'left' | 'right';
-    interactive?: boolean;
-}
-
-const CurvedLoop: FC<CurvedLoopProps> = ({
+const CurvedLoop = ({
     marqueeText = '',
     speed = 2,
     className,
@@ -23,9 +14,9 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
         return (hasTrailing ? marqueeText.replace(/\s+$/, '') : marqueeText) + '\u00A0';
     }, [marqueeText]);
 
-    const measureRef = useRef<SVGTextElement | null>(null);
-    const textPathRef = useRef<SVGTextPathElement | null>(null);
-    const pathRef = useRef<SVGPathElement | null>(null);
+    const measureRef = useRef(null);
+    const textPathRef = useRef(null);
+    const pathRef = useRef(null);
     const [spacing, setSpacing] = useState(0);
     const [offset, setOffset] = useState(0);
     const uid = useId();
@@ -34,7 +25,7 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
 
     const dragRef = useRef(false);
     const lastXRef = useRef(0);
-    const dirRef = useRef<'left' | 'right'>(direction);
+    const dirRef = useRef(direction);
     const velRef = useRef(0);
 
     const textLength = spacing;
@@ -78,15 +69,15 @@ const CurvedLoop: FC<CurvedLoopProps> = ({
         return () => cancelAnimationFrame(frame);
     }, [spacing, speed, ready]);
 
-    const onPointerDown = (e: PointerEvent) => {
+    const onPointerDown = (e) => {
         if (!interactive) return;
         dragRef.current = true;
         lastXRef.current = e.clientX;
         velRef.current = 0;
-        (e.target as HTMLElement).setPointerCapture(e.pointerId);
+        e.target.setPointerCapture(e.pointerId);
     };
 
-    const onPointerMove = (e: PointerEvent) => {
+    const onPointerMove = (e) => {
         if (!interactive || !dragRef.current || !textPathRef.current) return;
         const dx = e.clientX - lastXRef.current;
         lastXRef.current = e.clientX;

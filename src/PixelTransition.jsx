@@ -1,20 +1,8 @@
-import React, { useRef, useEffect, useState, CSSProperties } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import './PixelTransition.css';
 
-interface PixelTransitionProps {
-    firstContent: React.ReactNode | string;
-    secondContent: React.ReactNode | string;
-    gridSize?: number;
-    pixelColor?: string;
-    animationStepDuration?: number;
-    once?: boolean;
-    className?: string;
-    style?: CSSProperties;
-    aspectRatio?: string;
-}
-
-const PixelTransition: React.FC<PixelTransitionProps> = ({
+const PixelTransition = ({
     firstContent,
     secondContent,
     gridSize = 7,
@@ -25,12 +13,12 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
     className = '',
     style = {}
 }) => {
-    const containerRef = useRef<HTMLDivElement | null>(null);
-    const pixelGridRef = useRef<HTMLDivElement | null>(null);
-    const activeRef = useRef<HTMLDivElement | null>(null);
-    const delayedCallRef = useRef<gsap.core.Tween | null>(null);
+    const containerRef = useRef(null);
+    const pixelGridRef = useRef(null);
+    const activeRef = useRef(null);
+    const delayedCallRef = useRef(null);
 
-    const [isActive, setIsActive] = useState<boolean>(false);
+    const [isActive, setIsActive] = useState(false);
 
     const isTouchDevice =
         'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
@@ -57,14 +45,14 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
         }
     }, [gridSize, pixelColor]);
 
-    const animatePixels = (activate: boolean): void => {
+    const animatePixels = (activate) => {
         setIsActive(activate);
 
         const pixelGridEl = pixelGridRef.current;
         const activeEl = activeRef.current;
         if (!pixelGridEl || !activeEl) return;
 
-        const pixels = pixelGridEl.querySelectorAll<HTMLDivElement>('.pixelated-image-card__pixel');
+        const pixels = pixelGridEl.querySelectorAll('.pixelated-image-card__pixel');
         if (!pixels.length) return;
 
         gsap.killTweensOf(pixels);
@@ -102,13 +90,13 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
         });
     };
 
-    const handleEnter = (): void => {
+    const handleEnter = () => {
         if (!isActive) animatePixels(true);
     };
-    const handleLeave = (): void => {
+    const handleLeave = () => {
         if (isActive && !once) animatePixels(false);
     };
-    const handleClick = (): void => {
+    const handleClick = () => {
         if (!isActive) animatePixels(true);
         else if (isActive && !once) animatePixels(false);
     };
