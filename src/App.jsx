@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Github, Linkedin, Mail, Phone, MapPin, Code, Database, Brain, Server, Smartphone, Globe, ChevronDown, ExternalLink, Menu, X, Sun, Moon } from 'lucide-react';
-import { SiLeetcode, SiCodechef } from 'react-icons/si';
+import { Github, Linkedin, Mail, Phone, MapPin, Code, Database, ChevronDown, ExternalLink, Sun, Moon, Menu, X } from 'lucide-react';
+import { SiLeetcode, SiCodechef, SiC, SiPython, SiReact, SiHtml5, SiCss3, SiJavascript, SiNodedotjs, SiMongodb } from 'react-icons/si';
+import { FaJava } from 'react-icons/fa';
 
 import { FaEarlybirds } from "react-icons/fa";
 import logo from './assets/logo.png';
 import profile from './assets/profile.jpg';
 import hoverImage from './assets/hover-image.jpg';
 import PixelTransition from './PixelTransition';
+import CurvedLoop from './CurvedLoop';
+import FlowingSkills from './FlowingSkills';
 
 // Custom hook for scroll-triggered animations
 const useScrollAnimation = (threshold = 0.3) => {
@@ -158,26 +161,47 @@ const MatrixRain = () => {
 };
 
 // Skills data - moved outside component to avoid initialization issues
+// Skills data - Categorized
 const skills = [
-    { name: 'JavaScript', icon: Code },
-    { name: 'React', icon: Code },
-    { name: 'Node.js', icon: Server },
-    { name: 'Python', icon: Code },
-    { name: 'Machine Learning', icon: Brain },
-    { name: 'MongoDB', icon: Database },
-    { name: 'PostgreSQL', icon: Database },
-    { name: 'React Native', icon: Smartphone },
-    { name: 'Next.js', icon: Globe },
-    { name: 'TensorFlow', icon: Brain },
-    { name: 'Django', icon: Server },
-    { name: 'Express.js', icon: Server }
+    {
+        category: "Programming Languages",
+        items: [
+            { name: "C", icon: SiC },
+            { name: "Java", icon: FaJava },
+            { name: "Python", icon: SiPython }
+        ]
+    },
+    {
+        category: "Frontend Development",
+        items: [
+            { name: "React", icon: SiReact },
+            { name: "HTML", icon: SiHtml5 },
+            { name: "CSS", icon: SiCss3 }
+        ]
+    },
+    {
+        category: "Backend Development",
+        items: [
+            { name: "JavaScript", icon: SiJavascript },
+            { name: "Node.js", icon: SiNodedotjs }
+        ]
+    },
+    {
+        category: "Databases",
+        items: [
+            { name: "MongoDB", icon: SiMongodb },
+            { name: "SQL", icon: Database }
+        ]
+    }
 ];
 
 function App() {
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(true);
-    const { visibleCount, skillsRef } = useSkillsAnimation(skills.length);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('#home');
+    const totalSkillsCount = skills.reduce((acc, category) => acc + category.items.length, 0);
+    const { visibleCount, skillsRef } = useSkillsAnimation(totalSkillsCount);
     const aboutAnimation = useScrollAnimation(0.3);
     const projectsAnimation = useScrollAnimation(0.2);
     const contactAnimation = useScrollAnimation(0.3);
@@ -188,6 +212,7 @@ function App() {
         const element = document.getElementById(sectionId);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
+            setActiveSection('#' + sectionId);
             setIsMenuOpen(false);
         }
     };
@@ -234,13 +259,14 @@ function App() {
 
                     {/* Left Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
-                        {['Home', 'About', 'Skills', 'Projects'].map((item) => (
+                        {['About', 'Skills', 'Projects'].map((item) => (
                             <button
                                 key={item}
                                 onClick={() => scrollToSection(item.toLowerCase())}
-                                className={`${isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'} transition-colors duration-300 font-medium text-sm tracking-wide`}
+                                className={`${isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'} transition-colors duration-300 font-bold text-sm tracking-wide relative group`}
                             >
                                 {item}
+                                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
                             </button>
                         ))}
                     </div>
@@ -306,13 +332,13 @@ function App() {
             </nav>
 
             {/* Hero Section */}
-            <section id="home" className="relative z-10 min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden">
+            <section id="home" className="relative z-10 min-h-screen flex items-center justify-center px-4 pt-20 overflow-hidden scroll-mt-50">
                 <MatrixRain />
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
 
                     {/* Left Column - Image */}
                     <div className="relative order-2 lg:order-1 group flex justify-center">
-                        <div className="relative z-10 rounded-[2rem] overflow-hidden border-2 border-white/10 glow-card max-w-md mx-auto lg:mx-0 w-full">
+                        <div className="relative z-10 rounded-[2rem] overflow-hidden border-2 border-white/10 max-w-md mx-auto lg:mx-0 w-full">
                             <PixelTransition
                                 firstContent={
                                     <img
@@ -338,8 +364,8 @@ function App() {
                     </div>
 
                     {/* Right Column - Content */}
-                    <div className={`text-left order-1 lg:order-2 ${isDarkMode ? 'bg-black/60 border-red-500' : 'bg-white/60 border-red-500'} backdrop-blur-sm p-8 border-2 glow-card rounded-2xl transition-colors duration-300`}>
-                        <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} border mb-8`}>
+                    <div className="text-left order-1 lg:order-2 bg-black/60 border-red-500 backdrop-blur-sm p-8 border-2 glow-card rounded-2xl transition-colors duration-300">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border-white/10 border mb-8">
                             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                             <span className="text-xs font-bold tracking-widest text-gray-500 uppercase">Open to Work</span>
                         </div>
@@ -350,22 +376,41 @@ function App() {
                             <span className="block text-red-500 mt-2 text-3xl lg:text-4xl">Full Stack Developer</span>
                         </h1>
 
-                        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-lg mb-8 max-w-xl leading-relaxed`}>
-                            Building intelligent, scalable, and modern digital solutions. I specialize in full-stack web development, AI integrations, and machine learning–driven applications that help businesses innovate, automate, and grow in the digital era.
-                        </p>
+                        <div className="mb-8">
+                            <p className="text-gray-400 text-sm font-bold tracking-widest uppercase mb-4">Connect with me</p>
+                            <div className="flex gap-4">
+                                {[
+                                    { href: "https://leetcode.com/u/MUKESH_KUMAR_K/", icon: SiLeetcode },
+                                    { href: "https://www.codechef.com/users/kit23bam032", icon: SiCodechef },
+                                    { href: "https://codolio.com/profile/Mukesh_Kumar", icon: FaEarlybirds },
+                                    { href: "https://github.com/MukeshKumar-17", icon: Github },
+                                    { href: "https://www.linkedin.com/in/mukesh-kumar-15317029b/", icon: Linkedin }
+                                ].map((social, index) => (
+                                    <a
+                                        key={index}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-3 bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 backdrop-blur-sm rounded-xl transition-all duration-300 transform hover:scale-110"
+                                    >
+                                        <social.icon size={20} />
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
 
                         <div className="flex flex-wrap gap-4 mb-12">
                             <button
                                 onClick={() => scrollToSection('projects')}
-                                className="px-8 py-4 bg-[#ffddbf] text-black font-bold rounded-full hover:bg-white transition-colors duration-300 flex items-center gap-2"
+                                className="px-8 py-4 bg-[#FF0000] text-black font-bold rounded-full hover:bg-[#dc2626] transition-colors duration-300 flex items-center gap-2"
                             >
-                                MY SERVICES
+                                MY PROJECTS
                                 <ExternalLink size={18} />
                             </button>
                             <a
                                 href="/resume.pdf"
                                 target="_blank"
-                                className={`px-8 py-4 ${isDarkMode ? 'bg-white/5 text-white border-white/10 hover:bg-white/10' : 'bg-black/5 text-black border-black/10 hover:bg-black/10'} font-bold rounded-full border transition-colors duration-300 flex items-center gap-2`}
+                                className="px-8 py-4 bg-white/5 text-white border-white/10 hover:bg-white/10 font-bold rounded-full border transition-colors duration-300 flex items-center gap-2"
                             >
                                 <span className="mr-2">📄</span>
                                 Download Resume
@@ -383,7 +428,7 @@ function App() {
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
                     <button
                         onClick={() => scrollToSection('about')}
-                        className={`p-2 rounded-full ${isDarkMode ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/10 hover:bg-black/20 text-black'} transition-colors duration-300`}
+                        className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-300"
                     >
                         <ChevronDown size={32} />
                     </button>
@@ -391,14 +436,17 @@ function App() {
             </section>
 
             {/* About Me Heading */}
-            <section className="relative z-10 py-12 overflow-hidden">
-                <h2 className="text-3xl md:text-4xl font-thin text-center text-red-500 font-['Origamet_Hamida'] tracking-wide">
-                    ✦ABOUT ME✦
-                </h2>
+            <section id="about" className="relative z-10 pt-12 pb-2 overflow-hidden scroll-mt-55">
+                <CurvedLoop
+                    marqueeText="✦ ABOUT ME ✦"
+                    className="text-3xl md:text-4xl font-thin font-['Origamet_Hamida'] tracking-wide fill-red-500"
+                    curveAmount={50}
+                    speed={0.5}
+                />
             </section>
 
             {/* About Section */}
-            <section id="about" className="relative z-10 py-20 px-4">
+            <section className="relative z-10 pt-4 pb-20 px-4">
                 <div className="max-w-6xl mx-auto">
                     <div
                         ref={aboutAnimation.ref}
@@ -432,41 +480,27 @@ function App() {
                 </div>
             </section>
             {/* Skills Section */}
-            <section id="skills" className="relative z-10 py-20 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-black mb-12 text-center cyberhype-heading tracking-wider">
-                        SKILLS
-                    </h2>
-                    <div ref={skillsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {skills.map((skill, index) => (
-                            <div
-                                key={index}
-                                className={`skill-item bg-black/60 backdrop-blur-sm border-2 border-red-500 p-6 hover:border-red-400 transition-all duration-700 group glow-card hover:glow-border transform hover:scale-105 rounded-2xl ${index < visibleCount
-                                    ? 'translate-x-0 opacity-100'
-                                    : index % 2 === 0
-                                        ? '-translate-x-full opacity-0'
-                                        : 'translate-x-full opacity-0'
-                                    }`}
-                            >
-                                <div className="flex flex-col items-center text-center">
-                                    <skill.icon
-                                        size={32}
-                                        className="text-red-500 mb-3 group-hover:glow-icon transition-all duration-300"
-                                    />
-                                    <span className="text-white font-bold tracking-wide">{skill.name}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+            <section id="skills" className="relative z-10 py-12 overflow-hidden scroll-mt-53">
+                <CurvedLoop
+                    marqueeText="✦ SKILLS ✦"
+                    className="text-3xl md:text-4xl font-thin font-['Origamet_Hamida'] tracking-wide fill-red-500"
+                    curveAmount={50}
+                    speed={0.5}
+                />
+                <div className="w-full mt-8">
+                    <FlowingSkills categories={skills} isDarkMode={isDarkMode} />
                 </div>
             </section>
 
             {/* Projects Section */}
-            <section id="projects" className="relative z-10 py-20 px-4">
-                <div ref={projectsAnimation.ref} className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-black mb-12 text-center cyberhype-heading tracking-wider">
-                        PROJECTS
-                    </h2>
+            <section id="projects" className="relative z-10 py-12 overflow-hidden scroll-mt-150">
+                <CurvedLoop
+                    marqueeText="✦ PROJECTS ✦"
+                    className="text-3xl md:text-4xl font-thin font-['Origamet_Hamida'] tracking-wide fill-red-500"
+                    curveAmount={50}
+                    speed={0.5}
+                />
+                <div ref={projectsAnimation.ref} className="max-w-6xl mx-auto px-4 mt-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {projects.map((project, index) => (
                             <div
@@ -505,40 +539,51 @@ function App() {
             </section>
 
             {/* Contact Section */}
-            <section id="contact" className="relative z-10 py-20 px-4">
-                <div ref={contactAnimation.ref} className="max-w-2xl mx-auto">
-                    <h2 className="text-3xl md:text-4xl font-black mb-12 text-center cyberhype-heading tracking-wider">
-                        CONTACT
-                    </h2>
-                    <div className={`${isDarkMode ? 'bg-black/60 border-red-500' : 'bg-white/60 border-red-500'} backdrop-blur-sm p-8 border-2 glow-card rounded-2xl transition-all duration-1000 ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`}>
-                        <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-8 text-center`}>
-                            Let's collaborate on exciting projects or discuss opportunities in Full Stack Development and Machine Learning.
+            <section id="contact" className="relative z-10 py-12 overflow-hidden scroll-mt-32">
+                <CurvedLoop
+                    marqueeText="✦ CONTACT ✦"
+                    className="text-3xl md:text-4xl font-thin font-['Origamet_Hamida'] tracking-wide fill-red-500"
+                    curveAmount={50}
+                    speed={0.5}
+                />
+                <div ref={contactAnimation.ref} className="max-w-2xl mx-auto px-4 mt-6">
+                    <div className={`${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} backdrop-blur-sm p-8 border rounded-2xl hover:border-red-500/50 transition-all duration-1000 ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`}>
+                        <h3 className={`text-xl md:text-2xl font-thin mb-4 text-center font-['Origamet_Hamida'] ${isDarkMode ? 'text-white' : 'text-black'}`}>
+                            ✦ Let's Build Something Amazing Together ✦
+                        </h3>
+                        <p className={`text-base md:text-lg leading-relaxed ${isDarkMode ? 'text-gray-300' : 'text-gray-700'} mb-8 text-center max-w-xl mx-auto`}>
+                            I'm always open to discussing new projects, creative ideas, or opportunities in Full Stack Development and Machine Learning.
                         </p>
-                        <div className="space-y-6 max-w-md mx-auto">
-                            <div className={`flex items-center gap-4 p-4 border border-red-500/50 hover:border-red-500 transition-all duration-1000 glow-input rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '200ms' }}>
-                                <Mail className="text-red-500 glow-icon" size={24} />
-                                <div>
-                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm font-bold`}>EMAIL</p>
+                        <div className="space-y-4 max-w-lg mx-auto">
+                            <div className={`flex items-start gap-4 p-5 border ${isDarkMode ? 'border-white/10' : 'border-black/10'} hover:border-red-500/50 transition-all duration-1000 rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '200ms' }}>
+                                <Mail className="text-red-500 flex-shrink-0 mt-1" size={24} />
+                                <div className="flex-1">
+                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wider font-bold mb-1 font-['Origamet_Hamida']`}>Email</p>
                                     <a
                                         href="mailto:mukeshkumark1755@gmail.com"
-                                        className={`${isDarkMode ? 'text-white' : 'text-black'} font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer`}
+                                        className={`${isDarkMode ? 'text-white' : 'text-black'} text-base md:text-lg font-semibold hover:text-red-500 transition-colors duration-300 cursor-pointer break-all`}
                                     >
                                         mukeshkumark1755@gmail.com
                                     </a>
                                 </div>
                             </div>
-                            <div className={`flex items-center gap-4 p-4 border border-red-500/50 hover:border-red-500 transition-all duration-1000 glow-input rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '400ms' }}>
-                                <Phone className="text-red-500 glow-icon" size={24} />
-                                <div>
-                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm font-bold`}>PHONE</p>
-                                    <p className={`${isDarkMode ? 'text-white' : 'text-black'} font-bold`}>+918608622547</p>
+                            <div className={`flex items-start gap-4 p-5 border ${isDarkMode ? 'border-white/10' : 'border-black/10'} hover:border-red-500/50 transition-all duration-1000 rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '400ms' }}>
+                                <Phone className="text-red-500 flex-shrink-0 mt-1" size={24} />
+                                <div className="flex-1">
+                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wider font-bold mb-1 font-['Origamet_Hamida']`}>Phone</p>
+                                    <a
+                                        href="tel:+918608622547"
+                                        className={`${isDarkMode ? 'text-white' : 'text-black'} text-base md:text-lg font-semibold hover:text-red-500 transition-colors duration-300 cursor-pointer`}
+                                    >
+                                        +91 86086 22547
+                                    </a>
                                 </div>
                             </div>
-                            <div className={`flex items-center gap-4 p-4 border border-red-500/50 hover:border-red-500 transition-all duration-1000 glow-input rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '600ms' }}>
-                                <MapPin className="text-red-500 glow-icon" size={24} />
-                                <div>
-                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm font-bold`}>LOCATION</p>
-                                    <p className={`${isDarkMode ? 'text-white' : 'text-black'} font-bold`}>INDIA</p>
+                            <div className={`flex items-start gap-4 p-5 border ${isDarkMode ? 'border-white/10' : 'border-black/10'} hover:border-red-500/50 transition-all duration-1000 rounded-xl ${contactAnimation.isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'}`} style={{ transitionDelay: '600ms' }}>
+                                <MapPin className="text-red-500 flex-shrink-0 mt-1" size={24} />
+                                <div className="flex-1">
+                                    <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-xs uppercase tracking-wider font-bold mb-1 font-['Origamet_Hamida']`}>Location</p>
+                                    <p className={`${isDarkMode ? 'text-white' : 'text-black'} text-base md:text-lg font-semibold`}>Coimbatore, Tamil Nadu, India</p>
                                 </div>
                             </div>
                         </div>
@@ -547,9 +592,9 @@ function App() {
             </section>
 
             {/* Footer */}
-            <footer className={`relative z-10 py-8 px-4 border-t-2 border-red-500 glow-border ${isDarkMode ? 'bg-black' : 'bg-gray-100'}`}>
-                <div className="max-w-4xl mx-auto text-center">
-                    <div className="flex justify-center gap-4 mb-6">
+            <footer className="relative z-10 py-8 px-4">
+                <div className={`max-w-4xl mx-auto ${isDarkMode ? 'bg-black/40 border-white/10' : 'bg-white/70 border-black/10'} backdrop-blur-md border rounded-full px-8 py-6 shadow-lg transition-colors duration-300`}>
+                    <div className="flex justify-center gap-6">
                         {[
                             { href: "https://leetcode.com/u/MUKESH_KUMAR_K/", icon: SiLeetcode },
                             { href: "https://www.codechef.com/users/kit23bam032", icon: SiCodechef },
@@ -562,13 +607,16 @@ function App() {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`p-4 ${isDarkMode ? 'bg-black/40' : 'bg-white/40'} border-2 border-red-500 hover:border-red-400 text-red-500 hover:bg-red-500 hover:text-black transition-all duration-300 glow-button transform hover:scale-110 rounded-lg`}
+                                className={`p-4 ${isDarkMode ? 'bg-white/5 border-white/10 text-gray-300 hover:text-white hover:bg-white/10' : 'bg-black/5 border-black/10 text-gray-600 hover:text-black hover:bg-black/10'} backdrop-blur-sm border rounded-xl transition-all duration-300 transform hover:scale-110`}
                             >
-                                <social.icon size={24} className="glow-icon" />
+                                <social.icon size={24} />
                             </a>
                         ))}
                     </div>
                 </div>
+                <p className={`text-xs mt-6 ${isDarkMode ? 'text-gray-500' : 'text-gray-600'} font-mono tracking-wider`}>
+                    © 2025 Mukesh Kumar. All Rights Reserved
+                </p>
             </footer>
         </div>
     );

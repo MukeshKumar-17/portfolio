@@ -30,14 +30,28 @@ const CurvedLoop = ({
 
     const textLength = spacing;
     const totalText = textLength
-        ? Array(Math.ceil(1800 / textLength) + 2)
+        ? Array(Math.ceil(5000 / textLength) + 4)
             .fill(text)
             .join('')
         : text;
     const ready = spacing > 0;
 
     useEffect(() => {
-        if (measureRef.current) setSpacing(measureRef.current.getComputedTextLength());
+        const measure = () => {
+            if (measureRef.current) {
+                setSpacing(measureRef.current.getComputedTextLength());
+            }
+        };
+
+        measure();
+
+        // Re-measure when fonts are loaded to ensure correct spacing
+        if (document.fonts) {
+            document.fonts.ready.then(measure);
+        }
+
+        window.addEventListener('resize', measure);
+        return () => window.removeEventListener('resize', measure);
     }, [text, className]);
 
     useEffect(() => {
