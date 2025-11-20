@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Origamet Hamida font */
+@font-face {
+  font-family: 'Origamet Hamida';
+  src: url('/fonts/Origamet_Hamida[1].ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Custom Matrix Theme Glow Effects - Designed by Mukesh Kumar */
+.glow-text {
+  text-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000, 0 0 30px #FF0000;
+}
+
+.glow-icon {
+  filter: drop-shadow(0 0 5px #FF0000) drop-shadow(0 0 10px #FF0000);
+}
+
+.glow-button {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 40px rgba(255, 0, 0, 0.3), 0 0 60px rgba(255, 0, 0, 0.1);
+}
+
+.glow-border {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 15px rgba(255, 0, 0, 0.1);
+}
+
+.glow-card {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2), 0 0 30px rgba(255, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.glow-line {
+  box-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000;
+}
+
+.glow-progress {
+  box-shadow: 0 0 10px #FF0000, 0 0 20px #FF0000;
+}
+
+.glow-input:focus {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 10px rgba(255, 0, 0, 0.1);
+}
+
+/* Enhanced glossy blur effects for all boxes */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Additional glossy effect for cards */
+.glow-card {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 50%, rgba(255, 0, 0, 0.05) 100%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glow-card:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.85) 50%, rgba(255, 0, 0, 0.08) 100%);
+  backdrop-filter: blur(16px) saturate(200%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(255, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Enhanced input styling */
+.glow-input {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(255, 0, 0, 0.03) 100%);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    0 0 10px rgba(255, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glow-input:hover {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(255, 0, 0, 0.05) 100%);
+  backdrop-filter: blur(12px) saturate(170%);
+  -webkit-backdrop-filter: blur(12px) saturate(170%);
+}
+
+/* Custom text selection color */
+::selection {
+  backgrounssssssssd-color: #FF0000;
+  color: #000000;
+}
+
+::-moz-selection {
+  background-color: #FF0000;
+  color: #000000;
+}
+
+/* Enhanced user experience */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar design */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF0000;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #CC0000;
+}
+
+/* Matrix animation canvas setup */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Content layering */
+.relative.z-10 {
+  position: relative;
+  z-index: 20;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800;900&display=swap');
+/* Removed Orbitron import */
+
+/* Set global box-sizing and resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background: #000;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* Custom animations */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes bounce-slow {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+/* Cyberhype-style font for headings */
+.cyberhype-heading {
+  font-family: 'Origamet Hamida', 'JetBrains Mono', monospace;
+  font-weight: 900;
+  color: #FF0000 !important;
+  letter-spacing: 0.1em;
+}
