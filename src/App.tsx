@@ -7,6 +7,7 @@ import logo from './assets/logo.png';
 import profile from './assets/profile.jpg';
 import hoverImage from './assets/hover-image.jpg';
 import PixelTransition from './PixelTransition';
+import CurvedLoop from './CurvedLoop';
 
 // Custom hook for scroll-triggered animations
 const useScrollAnimation = (threshold = 0.3) => {
@@ -378,6 +379,27 @@ function App() {
             </div>
           </div>
         </div>
+
+        {/* Scroll Down Arrow */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+          <button
+            onClick={() => scrollToSection('about')}
+            className={`p-2 rounded-full ${isDarkMode ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/10 hover:bg-black/20 text-black'} transition-colors duration-300`}
+          >
+            <ChevronDown size={32} />
+          </button>
+        </div>
+      </section>
+
+      {/* Curved Loop Section */}
+      <section className="relative z-10 py-0 overflow-hidden">
+        <CurvedLoop
+          marqueeText="ABOUT ✦ ME ✦ "
+          speed={4}
+          curveAmount={60}
+          interactive={true}
+          className="fill-red-500 font-['Origamet_Hamida']"
+        />
       </section>
 
       {/* About Section */}
