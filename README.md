@@ -70,7 +70,7 @@ This portfolio combines modern web development practices with a unique cyberpunk
 - **Animations**: Subtle yet engaging interactive elements
 - **Performance**: Optimized for fast loading and smooth animations
 
-## 🔧 Customization
+## 🔧 Customization 
 
 ### Personal Information
 Update your details in `src/App.tsx`:
