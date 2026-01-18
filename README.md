@@ -2,7 +2,7 @@
 
 A modern, cyberpunk-themed portfolio website showcasing my skills as a Full Stack Developer and Machine Learning Engineer.
 
-## 🎯 Features
+## Features
 
 - **Matrix Rain Animation**: Custom-built falling binary digits background
 - **Cyberpunk Design**: Red and black theme with glowing effects
@@ -11,7 +11,7 @@ A modern, cyberpunk-themed portfolio website showcasing my skills as a Full Stac
 - **Professional Showcase**: Projects, skills, and contact information
 - **Modern Tech Stack**: Built with latest web technologies
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Frontend**: React 18, TypeScript
 - **Styling**: Tailwind CSS
@@ -20,7 +20,7 @@ A modern, cyberpunk-themed portfolio website showcasing my skills as a Full Stac
 - **Font**: JetBrains Mono
 - **Animation**: Custom Canvas API implementation
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Node.js (v16 or higher)
@@ -43,7 +43,7 @@ A modern, cyberpunk-themed portfolio website showcasing my skills as a Full Stac
    ```
 5. Open your browser and visit `http://localhost:5173`
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 mukesh-portfolio/
@@ -60,7 +60,7 @@ mukesh-portfolio/
 └── tsconfig.json        # TypeScript configuration
 ```
 
-## 🎨 Design Philosophy
+## Design Philosophy
 
 This portfolio combines modern web development practices with a unique cyberpunk aesthetic:
 
@@ -70,7 +70,7 @@ This portfolio combines modern web development practices with a unique cyberpunk
 - **Animations**: Subtle yet engaging interactive elements
 - **Performance**: Optimized for fast loading and smooth animations
 
-## 🔧 Customization 
+## Customization 
 
 ### Personal Information
 Update your details in `src/App.tsx`:
@@ -93,7 +93,7 @@ Add your projects and experiences:
 - GitHub links
 - Live demo URLs
 
-## 📱 Responsive Design
+## Responsive Design
 
 The portfolio is fully responsive and tested on:
 - Desktop computers (1920px+)
@@ -101,7 +101,7 @@ The portfolio is fully responsive and tested on:
 - Tablets (768px - 1023px)
 - Mobile phones (320px - 767px)
 
-## ⚡ Performance Optimizations
+## Performance Optimizations
 
 - Efficient matrix rain animation using requestAnimationFrame
 - Optimized bundle size with Vite
@@ -109,7 +109,7 @@ The portfolio is fully responsive and tested on:
 - Compressed assets and fonts
 - CSS animations for better performance
 
-## 🎓 Learning Outcomes
+## Learning Outcomes
 
 Building this portfolio helped me learn:
 - Advanced React patterns and hooks
@@ -119,17 +119,15 @@ Building this portfolio helped me learn:
 - TypeScript best practices
 - Build tool optimization
 
-## 📄 License
+## License
 
 This project is open source and available under the MIT License.
 
-## 📞 Contact  
+## Contact  
 
 **Mukesh Kumar Kannan**
 - Email: mukeshkumark1755@gmail.com
 - Phone: +918608622547
 - Location: India
 
----
 
-*Developed with passion for clean code and modern design* ❤️
